@@ -1,21 +1,27 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
 
-export default class Meeting extends BaseModel {
+export default class Guestbook extends BaseModel {
   @column({ isPrimary: true })
   public id: number
 
   @column({})
-  public room_name: string
+  public nama: string
 
   @column({})
-  public room_capacity: number
+  public company: string
 
   @column({})
-  public room_display: string
+  public purpose: string
 
   @column({})
-  public room_port: string
+  public meet_with: string
+
+  @column({})
+  public date: Date
+
+  @column({})
+  public time: DateTime
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
@@ -23,5 +29,4 @@ export default class Meeting extends BaseModel {
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
 
-  public static table = 'meetings'
 }

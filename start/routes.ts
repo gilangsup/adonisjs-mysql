@@ -24,3 +24,9 @@ Route.get('/', async () => {
   return { hello: 'world' }
 })
 Route.get('room', 'MeetingsController.index')
+Route.post('room', 'MeetingsController.store')
+Route.post('guest', 'GuestbooksController.store')
+Route.get('guest', 'GuestbooksController.index')
+Route.post('/register', 'AuthController.register')
+Route.post('/login', 'AuthController.login')
+Route.get('/profile', 'ProfileController.index').middleware('auth')
