@@ -23,10 +23,27 @@ import Route from '@ioc:Adonis/Core/Route'
 Route.get('/', async () => {
   return { hello: 'world' }
 })
-Route.get('room', 'MeetingsController.index')
-Route.post('room', 'MeetingsController.store')
+
+/**MeetingRoom */
+Route.get('room_meeting', 'RoomController.getDataRoom')
+Route.get('room', 'RoomController.index')
+Route.post('room', 'RoomController.store')
+
+/**MeetingsName */
+Route.post('meeting_name', 'MeetingsController.store')
+Route.get('meeting_name', 'MeetingsController.index')
+
+/**Guest */
 Route.post('guest', 'GuestbooksController.store')
 Route.get('guest', 'GuestbooksController.index')
+Route.patch('guest/:id', 'GuestbooksController.update')
+Route.delete('guest/:id', 'GuestbooksController.delete')
+
+/**Mobil */
+Route.get('mobil', 'MobilsController.index')
+Route.post('mobil', 'MobilsController.store')
+
+/**auth */
 Route.post('/register', 'AuthController.register')
 Route.post('/login', 'AuthController.login')
 Route.get('/profile', 'ProfileController.index').middleware('auth')

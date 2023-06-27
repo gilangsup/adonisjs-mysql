@@ -1,51 +1,65 @@
-// import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-
-import { HttpContext } from "@adonisjs/core/build/standalone";
-import Database from "@ioc:Adonis/Lucid/Database";
+import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import Database from '@ioc:Adonis/Lucid/Database'
 import Meeting from 'App/Models/Meeting'
 
 export default class MeetingsController {
-    public async index({ response }: HttpContext) {
+
+    public async store({ response, request }: HttpContextContract) {
+
+        const roomdId = request.input('RoomID')
+        const startDate = request.input('StartDate')
+        const endDate = request.input('EndDate')
+        const startTime = request.input('StartTime')
+        const endTime = request.input('EndTime')
+        const guest = request.input('Guest')
+        const purpose = request.input('Purpose')
+        const order = request.input('Order')
+        const approval = request.input('Approval')
+        const createdByUser = request.input('CreatedByUser')
+
         try {
-            const room = await Database.from('meetings as s').select('*')
+            await Meeting.create({
+                RoomID: roomdId,
+                StartDate: startDate,
+                StartTime: startTime,
+                EndDate: endDate,
+                EndTime: endTime,
+                Guest: guest,
+                Purpose: purpose,
+                Order: order,
+                Approval: approval,
+                CreatedByUser: createdByUser
+            })
             return response.status(200).json({
                 code: 200,
-                status: "success",
-                data: room
+                status: 'Success',
+                message: 'Success input data'
             })
         } catch (error) {
             return response.status(500).json({
                 code: 500,
-                status: "error",
+                status: 'Error',
                 message: error.message
             })
         }
     }
 
-    public async store({request, response}: HttpContext) {
-        const roomName = request.input('room_name')
-        const roomCapacity = request.input('room_capacity')
-        const roomDisplay = request.input('room_display')
-        const roomPort = request.input('room_port')
-        
+    public async index({ response }: HttpContextContract) {
         try {
-            await Meeting.create({
-                room_name: roomName,
-                room_capacity: roomCapacity,
-                room_display: roomDisplay,
-                room_port: roomPort
-            })
+            const meetings = await Database.from('meeting_names').select('*')
             return response.status(200).json({
                 code: 200,
-                status: "Succes",
-                message: "Data added"
+                status: 'success',
+                data: meetings
             })
         } catch (error) {
             return response.status(500).json({
                 code: 500,
-                status: "error",
+                status: 'error',
                 message: error.message
             })
         }
+
     }
+
 }

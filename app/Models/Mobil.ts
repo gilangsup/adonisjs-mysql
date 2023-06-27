@@ -1,39 +1,40 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
 
-export default class Meeting extends BaseModel {
+export default class Mobil extends BaseModel {
   @column({ isPrimary: true })
   public id: number
 
   @column({})
-  public RoomID: number
+  public name: string
 
   @column({})
-  public StartDate: Date
+  public approval: number
 
   @column({})
-  public EndDate: Date
+  public purpose: string
+
 
   @column({})
-  public StartTime: DateTime
+  public start_date: Date
 
   @column({})
-  public EndTime: DateTime
+  public end_date: Date
 
   @column({})
-  public Guest: string
+  public start_time: DateTime
 
   @column({})
-  public Approval: number
+  public from_location: string
 
   @column({})
-  public Purpose: string
+  public to_location: string
 
   @column({})
-  public Order: String
+  public driver_name: string
 
   @column({})
-  public CreatedByUser: string
+  public department: string
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
@@ -41,5 +42,5 @@ export default class Meeting extends BaseModel {
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
 
-  public static table = 'meeting_names'
+  public static table = 'employes'
 }
