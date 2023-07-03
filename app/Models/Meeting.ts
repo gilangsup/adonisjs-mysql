@@ -41,5 +41,5 @@ export default class Meeting extends BaseModel {
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
 
-  public static table = 'meeting_names'
+  public static table = 'meeting_lists'
 }

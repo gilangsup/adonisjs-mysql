@@ -1,11 +1,11 @@
-// import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
 import { HttpContext } from "@adonisjs/core/build/standalone";
 import Database from "@ioc:Adonis/Lucid/Database";
 import Room from 'App/Models/Room'
 
 export default class MeetingsController {
-    public async index({ response }: HttpContext) {
+    public async index({ response }: HttpContextContract) {
         try {
             const room = await Database.from('meetings as s').select('*')
             return response.status(200).json({
@@ -22,12 +22,12 @@ export default class MeetingsController {
         }
     }
 
-    public async store({request, response}: HttpContext) {
+    public async store({ request, response }: HttpContext) {
         const roomName = request.input('room_name')
         const roomCapacity = request.input('room_capacity')
         const roomDisplay = request.input('room_display')
         const roomPort = request.input('room_port')
-        
+
         try {
             await Room.create({
                 room_name: roomName,
@@ -49,15 +49,15 @@ export default class MeetingsController {
         }
     }
 
-    // public async getDataRoom({response, request}: HttpContextContract){
+    // public async getDataRoom({ response, request }: HttpContextContract) {
 
-    //     const today = new Date().toISOString().split('T')[0]; 
+    //     const today = new Date().toISOString().split('T')[0];
 
     //     try {
 
     //         const data = await Room.query()
-    //             .whereRaw('DATE(createdAt)',)
-    //             .orderBy("id", "asc");  
+    //             .whereRaw('DATE(createdAt)', today)
+    //             .orderBy("id", "asc");
 
     //         // const meet = await  
 
@@ -74,4 +74,5 @@ export default class MeetingsController {
     //         })
     //     }
     // }
+    
 }

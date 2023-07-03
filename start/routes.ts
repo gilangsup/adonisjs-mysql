@@ -31,6 +31,7 @@ Route.post('room', 'RoomController.store')
 
 /**MeetingsName */
 Route.post('meeting_name', 'MeetingsController.store')
+Route.post('meeting_name/custom', 'MeetingsController.custom')
 Route.get('meeting_name', 'MeetingsController.index')
 
 /**Guest */
@@ -42,6 +43,7 @@ Route.delete('guest/:id', 'GuestbooksController.delete')
 /**Mobil */
 Route.get('mobil', 'MobilsController.index')
 Route.post('mobil', 'MobilsController.store')
+Route.get('today', 'MobilsController.todays')
 
 /**auth */
 Route.post('/register', 'AuthController.register')

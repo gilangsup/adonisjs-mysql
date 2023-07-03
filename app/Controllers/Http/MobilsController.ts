@@ -21,6 +21,24 @@ export default class MobilsController {
         }
     }
 
+    public async todays({ response }: HttpContextContract) {
+        try {
+            const today = new Date().toISOString().slice(0, 10);
+            const mobil = await Database.from('employes').where('start_date', today)
+            return response.status(200).json({
+                code: 200,
+                status: 'success',
+                data: mobil
+            })
+        } catch (error) {
+            return response.status(500).json({
+                code: 500,
+                status: 'error',
+                message: error.message
+            })
+        }
+    }
+
     public async store({ response, request }: HttpContextContract) {
         const name = request.input('name')
         const purpose = request.input('purpose')
