@@ -7,7 +7,7 @@ import Room from 'App/Models/Room'
 export default class MeetingsController {
     public async index({ response }: HttpContextContract) {
         try {
-            const room = await Database.from('meetings as s').select('*')
+            const room = await Database.from('meeting_rooms as s').select('*')
             return response.status(200).json({
                 code: 200,
                 status: "success",
@@ -46,6 +46,29 @@ export default class MeetingsController {
                 status: "error",
                 message: error.message
             })
+        }
+    }
+
+    public async showMeetByFirst({ response, params }: HttpContextContract) {
+        let id = params.id
+        try {
+            const result = await Database.query()
+                .select('meeting_lists.*', 'meeting_rooms.room_name', 'meeting_rooms.room_capacity', 'meeting_rooms.room_port', 'meeting_rooms.room_display')
+                .from('meeting_rooms')
+                .innerJoin('meeting_lists', 'meeting_lists.RoomID', 'meeting_rooms.id')
+                .orderBy('StartTime', 'asc')
+                .where('meeting_lists.RoomID', id)
+                .whereRaw('DATE(meeting_lists.StartDate) = CURDATE()')
+                .first()
+
+
+            return response.status(200).json(result);
+        } catch (error) {
+            return response.status(500).json({
+                code: 500,
+                status: 'Error',
+                message: error.message,
+            });
         }
     }
 

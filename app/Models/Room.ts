@@ -36,5 +36,5 @@ export default class Room extends BaseModel {
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
 
-  public static table = 'meetings'
+  public static table = 'meeting_rooms'
 }
