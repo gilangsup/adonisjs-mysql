@@ -49,20 +49,28 @@ export default class MeetingsController {
         }
     }
 
-    public async showMeetByFirst({ response, params }: HttpContextContract) {
-        let id = params.id
+    public async showMeet({ response }: HttpContextContract) {
+        
         try {
             const result = await Database.query()
                 .select('meeting_lists.*', 'meeting_rooms.room_name', 'meeting_rooms.room_capacity', 'meeting_rooms.room_port', 'meeting_rooms.room_display')
                 .from('meeting_rooms')
                 .innerJoin('meeting_lists', 'meeting_lists.RoomID', 'meeting_rooms.id')
-                .orderBy('StartTime', 'asc')
-                .where('meeting_lists.RoomID', id)
                 .whereRaw('DATE(meeting_lists.StartDate) = CURDATE()')
                 .first()
 
+            return response.status(200).json({
+                code: 200,
+                status: "Success",
+                data: {
+                    room_name: result.room_name,
+                    room_capacity: result.room_capacity,
+                    room_port: result.room_port,
+                    room_display: result.room_display,
+                    meetings: result
+                }
+            })
 
-            return response.status(200).json(result);
         } catch (error) {
             return response.status(500).json({
                 code: 500,
@@ -72,30 +80,36 @@ export default class MeetingsController {
         }
     }
 
-    // public async getDataRoom({ response, request }: HttpContextContract) {
+    public async showMeetByFirst({ response, params }: HttpContextContract) {
+        let id = params.id
+        try {
+            const result = await Database.query()
+                .select('meeting_lists.*', 'meeting_rooms.room_name', 'meeting_rooms.room_capacity', 'meeting_rooms.room_port', 'meeting_rooms.room_display')
+                .from('meeting_rooms')
+                .innerJoin('meeting_lists', 'meeting_lists.RoomID', 'meeting_rooms.id')
+                .where('meeting_lists.RoomID', id)
+                .whereRaw('DATE(meeting_lists.StartDate) = CURDATE()')
+                .first()
 
-    //     const today = new Date().toISOString().split('T')[0];
+            return response.status(200).json({
+                code: 200,
+                status: "Success",
+                data: {
+                    room_name: result.room_name,
+                    room_capacity: result.room_capacity,
+                    room_port: result.room_port,
+                    room_display: result.room_display,
+                    meetings: result
+                }
+            })
 
-    //     try {
+        } catch (error) {
+            return response.status(500).json({
+                code: 500,
+                status: 'Error',
+                message: error.message,
+            });
+        }
+    }
 
-    //         const data = await Room.query()
-    //             .whereRaw('DATE(createdAt)', today)
-    //             .orderBy("id", "asc");
-
-    //         // const meet = await  
-
-    //         return response.status(200).json({
-    //             code: 200,
-    //             status: 'succecss',
-    //             message: "succes"
-    //         })
-    //     } catch (error) {
-    //         return response.status(500).json({
-    //             code: 500,
-    //             status: 'error',
-    //             message: error.message
-    //         })
-    //     }
-    // }
-    
 }

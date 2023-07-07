@@ -27,13 +27,14 @@ Route.get('/', async () => {
 /**MeetingRoom */
 Route.get('room', 'RoomController.index')
 Route.post('room', 'RoomController.store')
-Route.get('/room/meeting_name/:id', 'RoomController.showMeetByFirst')
+Route.get('/room/meeting/:id', 'RoomController.showMeetByFirst')
+Route.get('/room/meeting', 'RoomController.showMeet')
 
 /**MeetingsName */
-Route.get('meeting_name', 'MeetingsController.index')
-Route.post('meeting_name', 'MeetingsController.custom')
-Route.get('/meeting_name/room', 'MeetingsController.showAllMeet')
-Route.get('/meeting_name/:id', 'MeetingsController.showMeetByID')
+Route.get('meeting_lists', 'MeetingsController.index')
+Route.post('meeting_lists', 'MeetingsController.custom')
+Route.get('/meeting_lists/room', 'MeetingsController.showAllMeet')
+Route.get('/meeting_lists/:id', 'MeetingsController.showMeetByID')
 
 
 /**Guest */

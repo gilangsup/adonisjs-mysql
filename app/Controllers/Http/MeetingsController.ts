@@ -129,14 +129,17 @@ export default class MeetingsController {
     public async showMeetByID({ response, params }: HttpContextContract) {
         let id = params.id
         try {
-            const result = await Database.query()
-                .select('meeting_lists.*', 'meeting_rooms.room_name', 'meeting_rooms.room_capacity', 'meeting_rooms.room_port', 'meeting_rooms.room_display')
-                .from('meeting_rooms')
-                .innerJoin('meeting_lists', 'meeting_lists.RoomID', 'meeting_rooms.id')
+            const result = await Database
+                .from('meeting_lists')
+                .select('*')
                 .orderBy('StartTime', 'asc')
                 .where('meeting_lists.RoomID', id)
-
-            return response.status(200).json(result);
+                .first()
+            return response.status(200).json({
+                code: 200,
+                status: 'Success',
+                data: result
+            })
         } catch (error) {
             return response.status(500).json({
                 code: 500,
@@ -145,9 +148,4 @@ export default class MeetingsController {
             });
         }
     }
-
-    
-
-
-
 }
